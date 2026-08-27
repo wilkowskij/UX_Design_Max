@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>UX Design Max — four agents, one pipeline</title>
+<meta name="description" content="UX Design Max splits feature work in Claude Code into research, design, build, and review — four subagents, each on the model its job actually needs, with an explicit handoff between every stage and a defined escalation path for when a fix won't stick.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="main.js" defer></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<nav class="nav" aria-label="Primary">
+  <div class="container nav-inner">
+    <a class="nav-brand" href="#hero">ux-design-max</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#why">Why</a></li>
+      <li><a href="#pipeline">Pipeline</a></li>
+      <li><a href="#escalation">Escalation</a></li>
+      <li><a href="#caveat">Caveat</a></li>
+      <li><a href="#install">Install</a></li>
+      <li><a href="https://github.com/wilkowskij/UX_Design_Max" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></li>
+    </ul>
+  </div>
+</nav>
+
+<main id="main">
+
+  <section id="hero" aria-labelledby="hero-h1">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">claude code skill · ux-design-max</p>
+        <h1 id="hero-h1">Four agents. One pipeline. No agent reviewing its own work.</h1>
+        <p class="lead">UX Design Max splits feature work in Claude Code into research, design, build, and review — four subagents, each on the model its job actually needs, with an explicit handoff between every stage and a defined escalation path for when a fix won't stick.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#install">Install it</a>
+          <a class="btn btn-secondary" href="https://github.com/wilkowskij/UX_Design_Max" target="_blank" rel="noopener">View on GitHub<span class="visually-hidden"> (opens in a new tab)</span></a>
+        </div>
+        <p class="honesty-strip"><a href="#caveat">Honest about the limits — where this pipeline gets it wrong ↓</a></p>
+      </div>
+      <div class="hero-diagram">
+        <pre class="stage-list" tabindex="0" role="group" aria-label="Pipeline stages at a glance">research-agent         <span class="tok-haiku">haiku</span>    reads the codebase, cites files, changes nothing
+design-agent           <span class="tok-opus">opus</span>     returns a spec plus one stated trade-off
+build-agent            <span class="tok-sonnet">sonnet</span>   implements exactly that; stops after two failed fixes
+code-reviewer-agent    <span class="tok-opus">opus</span>     spec match, plus correctness, security, maintainability</pre>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" aria-labelledby="why-h2" data-reveal>
+    <div class="container">
+      <p class="eyebrow">01 / why</p>
+      <h2 id="why-h2">Why split the work at all</h2>
+      <p class="lead">A single agent doing research, design, implementation, and review in one pass blurs the boundaries between them. It starts coding before the design is settled, and it reviews its own work with the same blind spots that produced it.</p>
+      <div class="card-grid three-col">
+        <article class="card">
+          <h3>Handoffs become explicit</h3>
+          <p>Research hands facts to design. Design hands a spec to build. Build hands a diff to review. Nothing crosses a boundary as an assumption.</p>
+        </article>
+        <article class="card">
+          <h3>The reviewer didn't write the code</h3>
+          <p>An agent grading its own output carries the blind spots that created it. A separate reviewer, on a separate model, with no write tools, doesn't.</p>
+        </article>
+        <article class="card">
+          <h3>Each stage pays for what it needs</h3>
+          <p>Haiku for read-only lookups, Sonnet for execution, Opus where a wrong call is expensive to undo. No premium-model bill for routine research.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="pipeline" aria-labelledby="pipeline-h2" data-reveal>
+    <div class="container">
+      <p class="eyebrow">02 / pipeline</p>
+      <h2 id="pipeline-h2">The pipeline</h2>
+      <p class="lead">Each stage's real output is the next stage's input. Don't fill the gaps in between — that boundary is the whole point.</p>
+
+      <ol class="flow" role="list">
+        <li class="flow-node" data-agent="research">
+          <div class="flow-node-inner">
+            <span class="agent-name">research-agent</span>
+            <span class="model-chip model-haiku">haiku</span>
+          </div>
+          <p class="handoff">findings + file paths →</p>
+        </li>
+        <li class="flow-node" data-agent="design">
+          <div class="flow-node-inner">
+            <span class="agent-name">design-agent</span>
+            <span class="model-chip model-opus">opus</span>
+          </div>
+          <p class="handoff">spec + trade-off →</p>
+        </li>
+        <li class="flow-node" data-agent="build">
+          <div class="flow-node-inner">
+            <span class="agent-name">build-agent</span>
+            <span class="model-chip model-sonnet">sonnet</span>
+          </div>
+          <p class="handoff">diff + what was verified →</p>
+        </li>
+        <li class="flow-node" data-agent="review">
+          <div class="flow-node-inner">
+            <span class="agent-name">code-reviewer-agent</span>
+            <span class="model-chip model-opus">opus</span>
+          </div>
+          <p class="handoff">verdict + findings</p>
+        </li>
+      </ol>
+
+      <div class="card-grid two-col">
+        <article class="card agent-card" data-agent="research">
+          <h3>research-agent</h3>
+          <span class="model-chip model-haiku">haiku</span>
+          <p>Reads the codebase and the surrounding context, and cites exactly where its findings come from.</p>
+          <p class="chip-row-label">Tools</p>
+          <div class="chip-row">
+            <span class="chip">Read</span><span class="chip">Grep</span><span class="chip">Glob</span><span class="chip">Bash</span><span class="chip">WebFetch</span><span class="chip">WebSearch</span>
+          </div>
+          <p class="never"><span class="never-label">Never</span> Edits files, or makes a design decision.</p>
+        </article>
+        <article class="card agent-card" data-agent="design">
+          <h3>design-agent</h3>
+          <span class="model-chip model-opus">opus</span>
+          <p>Turns research into a concrete spec, and names the one trade-off it made to get there.</p>
+          <p class="chip-row-label">Tools</p>
+          <div class="chip-row">
+            <span class="chip">Read</span><span class="chip">Grep</span><span class="chip">Glob</span><span class="chip">Bash</span>
+          </div>
+          <p class="never"><span class="never-label">Never</span> Writes implementation code — it has no Edit or Write tool, deliberately.</p>
+        </article>
+        <article class="card agent-card" data-agent="build">
+          <h3>build-agent</h3>
+          <span class="model-chip model-sonnet">sonnet</span>
+          <p>Implements exactly the spec it was handed, and verifies its own work before handing off a diff.</p>
+          <p class="chip-row-label">Tools</p>
+          <div class="chip-row">
+            <span class="chip">Read</span><span class="chip">Grep</span><span class="chip">Glob</span><span class="chip">Bash</span><span class="chip">Edit</span><span class="chip">Write</span>
+          </div>
+          <p class="never"><span class="never-label">Never</span> Expands scope, or attempts a third fix.</p>
+        </article>
+        <article class="card agent-card" data-agent="review">
+          <h3>code-reviewer-agent</h3>
+          <span class="model-chip model-opus">opus</span>
+          <p>Checks spec match, plus correctness, security, and maintainability, with no ability to touch the code itself.</p>
+          <p class="chip-row-label">Tools</p>
+          <div class="chip-row">
+            <span class="chip">Read</span><span class="chip">Grep</span><span class="chip">Glob</span><span class="chip">Bash</span>
+          </div>
+          <p class="never"><span class="never-label">Never</span> Edits files — it diagnoses and recommends only.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="escalation" aria-labelledby="escalation-h2" data-reveal>
+    <div class="container">
+      <p class="eyebrow">03 / escalation</p>
+      <h2 id="escalation-h2">When the builder gets stuck</h2>
+      <p class="lead">Most agent loops fail the same way — attempt, fail, attempt again, fail again, then attempt a third time with more confidence and less information. build-agent is capped at two.</p>
+
+      <ol class="escalation" role="list">
+        <li class="esc-item" data-dot="sonnet" data-rail="default">
+          <h3>Fix attempt 1</h3>
+          <p>Fails.</p>
+        </li>
+        <li class="esc-item" data-dot="sonnet" data-rail="default">
+          <h3>Fix attempt 2, same issue</h3>
+          <p>Fails.</p>
+        </li>
+        <li class="esc-item esc-stop" data-dot="warn" data-rail="warn">
+          <h3>Stop.</h3>
+          <p>build-agent does not try a third time.</p>
+        </li>
+        <li class="esc-item" data-dot="warn" data-rail="warn">
+          <h3>Hand off to code-reviewer-agent</h3>
+          <p>With:</p>
+          <ul class="mono-list" role="list">
+            <li>the original design/spec</li>
+            <li>the bug as observed</li>
+            <li>both failed attempts, and why each one didn't work</li>
+          </ul>
+        </li>
+        <li class="esc-item" data-dot="opus" data-rail="warn">
+          <h3>Fresh diagnosis</h3>
+          <p>The reviewer is required not to repeat either failed attempt. The usual finding is that both attempts touched a code path that isn't the one driving the bug — a display-layer fix for a validation bug, say. It returns one specific, different, concrete fix, or states plainly that it can't resolve it and why.</p>
+        </li>
+      </ol>
+
+      <div class="callout callout-opus">
+        <h3>Tested end-to-end in this repo</h3>
+        <p>A deliberately introduced off-by-one bug, paired with two fabricated failed-fix narratives, was correctly diagnosed by code-reviewer-agent on the first pass — including a clear explanation of why each fake attempt could never have worked.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="caveat" aria-labelledby="caveat-h2" data-reveal>
+    <div class="container">
+      <p class="eyebrow">04 / caveat</p>
+      <h2 id="caveat-h2">Where this gets it wrong</h2>
+      <div class="panel panel-warn">
+        <p>code-reviewer-agent is thorough but not infallible. In testing it correctly diagnosed the escalated bug above — and separately flagged an already-fixed issue as still broken.</p>
+        <p class="panel-strong">Treat its findings as strong signal, not a verdict. Verify a finding against the actual code before acting on it, and especially before deciding not to ship something it flagged. A false "still broken" is the failure mode to watch for.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="install" aria-labelledby="install-h2" data-reveal>
+    <div class="container">
+      <p class="eyebrow">05 / install</p>
+      <h2 id="install-h2">Install</h2>
+
+      <div class="install-grid">
+        <div class="panel install-panel">
+          <h3>Into a project</h3>
+          <pre tabindex="0" role="group" aria-label="Shell commands to clone the repo and copy the agent files into a project">git clone https://github.com/wilkowskij/UX_Design_Max.git
+mkdir -p your-project/.claude/agents
+cp UX_Design_Max/.claude/agents/*.md your-project/.claude/agents/</pre>
+          <p class="note">Project scope commits alongside your repo. Use <code>~/.claude/agents/</code> instead to make the pipeline available in every project.</p>
+        </div>
+        <div class="panel install-panel">
+          <h3>As a Claude Skill</h3>
+          <p>The pipeline is also packaged as a standalone skill. Download <code>dist/ux-design-max.skill</code> and upload it through the skill creation flow on claude.ai.</p>
+          <p><a href="https://github.com/wilkowskij/UX_Design_Max/raw/main/dist/ux-design-max.skill" target="_blank" rel="noopener">Download ux-design-max.skill<span class="visually-hidden"> (opens in a new tab)</span> <span class="file-size">(8.2 KB)</span></a></p>
+        </div>
+      </div>
+
+      <div class="before-rely">
+        <h3 class="subhead">Before you rely on it</h3>
+        <div class="card-grid three-col">
+          <article class="card">
+            <h4>Name collisions are real</h4>
+            <p>code-reviewer-agent is a name other skills also use (smart-model-router, for one). If the destination already has one, merge the roles deliberately or keep both under distinct names. Don't overwrite silently.</p>
+          </article>
+          <article class="card">
+            <h4>Registry timing, not a bad file</h4>
+            <p>A freshly written agent file may not be visible to the Task/Agent tool until the session's agent registry refreshes. An immediate agent type not found is a timing issue; retry next turn or in a fresh session.</p>
+          </article>
+          <article class="card">
+            <h4>Smoke-test each agent alone first</h4>
+            <ul class="mono-list smoke-test" role="list">
+              <li><span class="agent-name">research-agent</span> -&gt; a factual question about the codebase; it should cite a real file and edit nothing.</li>
+              <li><span class="agent-name">design-agent</span> -&gt; a small design ask; it should state an explicit trade-off, not just a plan.</li>
+              <li><span class="agent-name">build-agent</span> -&gt; a one-line design; it should implement exactly that and nothing more.</li>
+              <li><span class="agent-name">code-reviewer-agent</span> -&gt; an obviously buggy stub; it should state the bug plainly rather than hedge.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p>MIT · © 2026 Jeff Wilkowski</p>
+    <p><a href="https://github.com/wilkowskij/UX_Design_Max" target="_blank" rel="noopener">GitHub<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+  </div>
+  <div class="container">
+    <p class="footer-note">This site was designed and built by the pipeline it describes.</p>
+  </div>
+</footer>
+
+</body>
+</html>
