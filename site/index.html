@@ -44,10 +44,12 @@
         <p class="honesty-strip"><a href="#caveat">Honest about the limits — where this pipeline gets it wrong ↓</a></p>
       </div>
       <div class="hero-diagram">
-        <pre class="stage-list" tabindex="0" role="group" aria-label="Pipeline stages at a glance">research-agent         <span class="tok-haiku">haiku</span>    reads the codebase, cites files, changes nothing
-design-agent           <span class="tok-opus">opus</span>     returns a spec plus one stated trade-off
-build-agent            <span class="tok-sonnet">sonnet</span>   implements exactly that; stops after two failed fixes
-code-reviewer-agent    <span class="tok-opus">opus</span>     spec match, plus correctness, security, maintainability</pre>
+        <ul class="stage-list" aria-label="Pipeline stages at a glance">
+          <li class="stage-row"><span class="stage-name">research-agent</span><span class="stage-model tok-haiku">haiku</span><span class="stage-desc">reads the codebase, cites files, changes nothing</span></li>
+          <li class="stage-row"><span class="stage-name">design-agent</span><span class="stage-model tok-opus">opus</span><span class="stage-desc">returns a spec plus one stated trade-off</span></li>
+          <li class="stage-row"><span class="stage-name">build-agent</span><span class="stage-model tok-sonnet">sonnet</span><span class="stage-desc">implements exactly that; stops after two failed fixes</span></li>
+          <li class="stage-row"><span class="stage-name">code-reviewer-agent</span><span class="stage-model tok-opus">opus</span><span class="stage-desc">spec match, plus correctness, security, maintainability</span></li>
+        </ul>
       </div>
     </div>
   </section>
