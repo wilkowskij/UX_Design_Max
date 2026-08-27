@@ -268,7 +268,7 @@ code {
 /* ===== Seam motif ===== */
 .seam,
 .nav::after,
-main > section:not(#hero)::before,
+main > section:not(#hero):not(#escalation)::before,
 .site-footer::before {
   --seam-half: 6px;
   --seam-line: var(--border);
@@ -293,7 +293,7 @@ main > section:not(#hero)::before,
 .seam-sm { --seam-half: 3px; }
 
 .nav::after,
-main > section:not(#hero)::before,
+main > section:not(#hero):not(#escalation)::before,
 .site-footer::before {
   content: "";
   position: absolute;
@@ -302,7 +302,7 @@ main > section:not(#hero)::before,
 }
 
 .nav::after { bottom: -4px; }
-main > section:not(#hero)::before { top: -4px; }
+main > section:not(#hero):not(#escalation)::before { top: -4px; }
 .site-footer::before { top: -4px; }
 
 @keyframes seam-wipe {
@@ -366,8 +366,11 @@ main > section:not(#hero)::before { top: -4px; }
 .hero-head {
   position: relative;
   width: 100%;
-  padding-inline: 24px;
   padding-top: clamp(48px, 8vw, 96px);
+}
+
+.hero-head > h1 {
+  padding-inline: 24px;
 }
 
 .hero-seam {
