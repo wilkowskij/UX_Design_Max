@@ -88,15 +88,12 @@ body {
 
 main section,
 section {
-  border-top: none;
   position: relative;
   padding-block: 96px;
   scroll-margin-top: 72px;
 }
 
 #hero {
-  border-top: none;
-  position: relative;
   overflow: clip;
   padding-block: 0;
 }
@@ -269,7 +266,10 @@ code {
 }
 
 /* ===== Seam motif ===== */
-.seam {
+.seam,
+.nav::after,
+main > section:not(#hero)::before,
+.site-footer::before {
   --seam-half: 6px;
   --seam-line: var(--border);
   display: block;
@@ -299,22 +299,6 @@ main > section:not(#hero)::before,
   position: absolute;
   left: 0;
   right: 0;
-  height: 8px;
-  background-repeat: no-repeat;
-  background-image:
-    linear-gradient(var(--accent) 0 0),
-    linear-gradient(var(--accent) 0 0),
-    linear-gradient(var(--accent) 0 0),
-    linear-gradient(90deg,
-      var(--border) 0 calc(25% - 6px),
-      transparent      calc(25% - 6px) calc(25% + 6px),
-      var(--border) calc(25% + 6px) calc(50% - 6px),
-      transparent      calc(50% - 6px) calc(50% + 6px),
-      var(--border) calc(50% + 6px) calc(75% - 6px),
-      transparent      calc(75% - 6px) calc(75% + 6px),
-      var(--border) calc(75% + 6px) 100%);
-  background-size: 2px 8px, 2px 8px, 2px 8px, 100% 1px;
-  background-position: 25% center, 50% center, 75% center, center center;
 }
 
 .nav::after { bottom: -4px; }
@@ -324,10 +308,6 @@ main > section:not(#hero)::before { top: -4px; }
 @keyframes seam-wipe {
   from { clip-path: inset(0 100% 0 0); }
   to { clip-path: inset(0 0 0 0); }
-}
-
-.hero-seam {
-  animation: seam-wipe 700ms cubic-bezier(.2,.6,.2,1) 120ms both;
 }
 
 /* ===== Buttons ===== */
@@ -391,6 +371,7 @@ main > section:not(#hero)::before { top: -4px; }
 }
 
 .hero-seam {
+  animation: seam-wipe 700ms cubic-bezier(.2,.6,.2,1) 120ms both;
   margin: 12px 0 clamp(20px, 3vw, 36px);
 }
 
@@ -713,9 +694,6 @@ main > section:not(#hero)::before { top: -4px; }
   width: 2px;
   height: 24px;
   background: var(--accent);
-  border-top: none;
-  border-right: none;
-  transform: none;
 }
 
 @media (max-width: 760px) {
@@ -875,6 +853,7 @@ main > section:not(#hero)::before { top: -4px; }
 
 .install-panel {
   border-radius: 8px;
+  min-width: 0;
 }
 
 .install-panel h3 {
@@ -975,27 +954,8 @@ html.js #install pre {
   margin: 0;
 }
 
-.footer-note::before {
-  content: "";
-  display: block;
-  width: 96px;
-  height: 8px;
+.site-footer .seam {
   margin-bottom: 12px;
-  background-repeat: no-repeat;
-  background-image:
-    linear-gradient(var(--accent) 0 0),
-    linear-gradient(var(--accent) 0 0),
-    linear-gradient(var(--accent) 0 0),
-    linear-gradient(90deg,
-      var(--border) 0 calc(25% - 3px),
-      transparent      calc(25% - 3px) calc(25% + 3px),
-      var(--border) calc(25% + 3px) calc(50% - 3px),
-      transparent      calc(50% - 3px) calc(50% + 3px),
-      var(--border) calc(50% + 3px) calc(75% - 3px),
-      transparent      calc(75% - 3px) calc(75% + 3px),
-      var(--border) calc(75% + 3px) 100%);
-  background-size: 2px 8px, 2px 8px, 2px 8px, 100% 1px;
-  background-position: 25% center, 50% center, 75% center, center center;
 }
 
 /* ===== JS-scoped reveal animation ===== */
@@ -1044,7 +1004,8 @@ html.js [data-reveal].is-visible {
   a[href^="http"]::after {
     content: " (" attr(href) ")";
   }
-  main > section::before, .nav::after, .site-footer::before, .footer-note::before {
+  main > section::before, .nav::after, .site-footer::before,
+  .seam, .honesty-strip::before, .flow::before, .flow-node:not(:last-child)::after {
     display: none !important;
   }
   main section {
