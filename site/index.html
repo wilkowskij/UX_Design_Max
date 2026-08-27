@@ -7,6 +7,9 @@
 <title>UX Design Max — four agents, one pipeline</title>
 <meta name="description" content="UX Design Max splits feature work in Claude Code into research, design, build, and review — four subagents, each on the model its job actually needs, with an explicit handoff between every stage and a defined escalation path for when a fix won't stick.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="styles.css">
 <script type="module" src="main.js" defer></script>
 </head>
@@ -32,10 +35,17 @@
 
   <section id="hero" aria-labelledby="hero-h1">
     <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-head">
+      <p class="eyebrow">claude code skill · ux-design-max</p>
+      <div class="seam hero-seam" aria-hidden="true"></div>
+      <h1 id="hero-h1">
+        <span class="h1-line">Four agents.</span>
+        <span class="h1-line">One pipeline.</span>
+        <span class="h1-turn">No agent reviewing its own work.</span>
+      </h1>
+    </div>
     <div class="container hero-grid">
       <div class="hero-copy">
-        <p class="eyebrow">claude code skill · ux-design-max</p>
-        <h1 id="hero-h1">Four agents. One pipeline. No agent reviewing its own work.</h1>
         <p class="lead">UX Design Max splits feature work in Claude Code into research, design, build, and review — four subagents, each on the model its job actually needs, with an explicit handoff between every stage and a defined escalation path for when a fix won't stick.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#install">Install it</a>
@@ -56,7 +66,7 @@
 
   <section id="why" aria-labelledby="why-h2" data-reveal>
     <div class="container">
-      <p class="eyebrow">01 / why</p>
+      <p class="eyebrow"><span class="eyebrow-num">01</span> / why</p>
       <h2 id="why-h2">Why split the work at all</h2>
       <p class="lead">A single agent doing research, design, implementation, and review in one pass blurs the boundaries between them. It starts coding before the design is settled, and it reviews its own work with the same blind spots that produced it.</p>
       <div class="card-grid three-col">
@@ -78,7 +88,7 @@
 
   <section id="pipeline" aria-labelledby="pipeline-h2" data-reveal>
     <div class="container">
-      <p class="eyebrow">02 / pipeline</p>
+      <p class="eyebrow"><span class="eyebrow-num">02</span> / pipeline</p>
       <h2 id="pipeline-h2">The pipeline</h2>
       <p class="lead">Each stage's real output is the next stage's input. Don't fill the gaps in between — that boundary is the whole point.</p>
 
@@ -160,7 +170,7 @@
 
   <section id="escalation" aria-labelledby="escalation-h2" data-reveal>
     <div class="container">
-      <p class="eyebrow">03 / escalation</p>
+      <p class="eyebrow"><span class="eyebrow-num">03</span> / escalation</p>
       <h2 id="escalation-h2">When the builder gets stuck</h2>
       <p class="lead">Most agent loops fail the same way — attempt, fail, attempt again, fail again, then attempt a third time with more confidence and less information. build-agent is capped at two.</p>
 
@@ -201,7 +211,7 @@
 
   <section id="caveat" aria-labelledby="caveat-h2" data-reveal>
     <div class="container">
-      <p class="eyebrow">04 / caveat</p>
+      <p class="eyebrow"><span class="eyebrow-num">04</span> / caveat</p>
       <h2 id="caveat-h2">Where this gets it wrong</h2>
       <div class="panel panel-warn">
         <p>code-reviewer-agent is thorough but not infallible. In testing it correctly diagnosed the escalated bug above — and separately flagged an already-fixed issue as still broken.</p>
@@ -212,7 +222,7 @@
 
   <section id="install" aria-labelledby="install-h2" data-reveal>
     <div class="container">
-      <p class="eyebrow">05 / install</p>
+      <p class="eyebrow"><span class="eyebrow-num">05</span> / install</p>
       <h2 id="install-h2">Install</h2>
 
       <div class="install-grid">
