@@ -1,9 +1,9 @@
 ---
 name: ux-design-max
-description: Install and run a four-agent design-build-router pipeline (research → design → build → review) that routes each stage of feature work to the right model — Haiku for research, Opus for design and review, Sonnet for implementation — with a built-in escalation path when the builder gets stuck. Use this whenever the user wants to set up a structured multi-agent workflow for building a feature end-to-end, wants research/design/build/review split across separate subagents instead of one agent doing everything, wants to cut cost by routing routine work to a cheaper model, or mentions wanting an escalation protocol so a stuck bug doesn't loop forever on retries. Also trigger when the user asks to install, package, or distribute this exact pipeline as a Claude Skill.
+description: Install and run a four-agent pipeline (research → design → build → review) that routes each stage of feature work to the right model — Haiku for research, Opus for design and review, Sonnet for implementation — with a built-in escalation path when the builder gets stuck. Use this whenever the user wants to set up a structured multi-agent workflow for building a feature end-to-end, wants research/design/build/review split across separate subagents instead of one agent doing everything, wants to cut cost by routing routine work to a cheaper model, or mentions wanting an escalation protocol so a stuck bug doesn't loop forever on retries. Also trigger when the user asks to install, package, or distribute this exact pipeline as a Claude Skill.
 ---
 
-# UX Design Max — Design-Build Router
+# UX Design Max
 
 A four-agent pipeline that splits feature work into four roles, each on the model suited to it, with a defined handoff between stages and an explicit escalation path for stuck bugs.
 
@@ -16,9 +16,9 @@ A single agent doing research, design, implementation, and review in one pass te
 | Agent | Model | Role |
 |---|---|---|
 | `research-agent` | Haiku | Read-only research and codebase/doc exploration. Never edits files, never makes design decisions. |
-| `design-agent` | Opus | Turns a feature/change into a concrete design (UX flow, component/API shape, architecture). Always states an explicit trade-off it considered — this self-review step is mandatory, not optional. |
+| `design-agent` | Opus | Turns a feature/change into a concrete design (UX flow, component/API shape, architecture). Always states an explicit trade-off it considered. For any user-visible surface, also commits to a stated visual point of view — palette, type pairing, signature motif — rather than defaulting to generic styling. Both self-review steps are mandatory, not optional. |
 | `build-agent` | Sonnet | Implements exactly the design it's handed. Doesn't expand scope or make its own design calls. Stops and escalates after two failed attempts at the same fix, rather than trying a third. |
-| `code-reviewer-agent` | Opus | Reviews finished work against both the design/spec and general correctness/security/maintainability. Also the escalation target when build-agent has failed twice on the same issue — diagnoses with fresh eyes instead of repeating what already failed. |
+| `code-reviewer-agent` | Opus | Reviews finished work against both the design/spec and general correctness/security/maintainability. Also the escalation target when build-agent has failed twice on the same issue — diagnoses with fresh eyes instead of repeating what already failed. Also checks that the build did not abandon the design's stated visual commitments. |
 
 Full system prompts for each are in `references/agents/`.
 
@@ -28,8 +28,8 @@ Full system prompts for each are in `references/agents/`.
 2. Before copying, check whether a file of the same name already exists at the destination. If it does, stop and ask whether to overwrite or merge — don't silently clobber a customized agent. `code-reviewer-agent` in particular is a name shared with other skills (e.g. `smart-model-router`); if both are in play, ask whether to merge the two role descriptions or keep them side by side under different names.
 3. After copying, smoke-test each agent independently with a trivial, single-purpose prompt before relying on it in a real pipeline:
    - `research-agent`: ask it a factual question about the codebase; confirm it cites a real file and doesn't try to edit anything.
-   - `design-agent`: ask it to sketch a small design; confirm it states an explicit trade-off, not just a plan.
-   - `build-agent`: give it a one-line design; confirm it implements exactly that and doesn't expand scope.
+   - `design-agent`: ask it to sketch a small design for a visible surface; confirm it states both an explicit trade-off and the four visual commitments as labeled blocks.
+   - `build-agent`: give it a one-line design; confirm it implements exactly that, doesn't expand scope, and reports the widths it verified.
    - `code-reviewer-agent`: give it an obviously buggy stub; confirm it states the bug plainly rather than hedging.
 4. Newly created agent definition files may not be visible to the Task/Agent tool until the session picks up the updated agent registry — if a dispatch fails with "agent type not found" right after installing, that's the likely cause, not a bad file. Retrying after the registry refreshes (e.g. next turn, or a fresh session) resolves it.
 
